@@ -1,29 +1,31 @@
 %include	/usr/lib/rpm/macros.mono
-Summary:	.NET bindings for GStreamer
-Summary(pl.UTF-8):	Wiązania GStreamera dla .NET
-Name:		dotnet-gstreamer-sharp
+Summary:	.NET bindings for GStreamer 0.10
+Summary(pl.UTF-8):	Wiązania GStreamera 0.10 dla .NET
+Name:		dotnet-gstreamer0.10-sharp
 Version:	0.9.2
-Release:	2
+Release:	3
 License:	LGPL v2+
 Group:		Libraries
 Source0:	http://gstreamer.freedesktop.org/src/gstreamer-sharp/gstreamer-sharp-%{version}.tar.bz2
 # Source0-md5:	767bdba4dd753ba766352360c7053c14
 Patch0:		%{name}-destdir.patch
+Patch1:		%{name}-glib.patch
 URL:		http://gstreamer.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	glib2-devel >= 1:2.18.1
-BuildRequires:	gstreamer-devel >= 0.10.25
-BuildRequires:	gstreamer-plugins-base-devel >= 0.10.25
+BuildRequires:	gstreamer0.10-devel >= 0.10.25
+BuildRequires:	gstreamer0.10-plugins-base-devel >= 0.10.25
 BuildRequires:	libtool
 BuildRequires:	mono-csharp >= 2.4
 BuildRequires:	monodoc >= 1.1
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	glib2 >= 1:2.18.1
-Requires:	gstreamer >= 0.10.25
-Requires:	gstreamer-plugins-base >= 0.10.25
+Requires:	gstreamer0.10 >= 0.10.25
+Requires:	gstreamer0.10-plugins-base >= 0.10.25
 Requires:	mono >= 2.4
+Obsoletes:	dotnet-gstreamer-sharp < 0.10
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -40,6 +42,7 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki GStreamer-sharp
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	monodoc >= 1.1
+Obsoletes:	dotnet-gstreamer-sharp-devel < 0.10
 
 %description devel
 Development files for GStreamer-sharp library.
@@ -52,6 +55,7 @@ Summary:	Static gstreamer-sharp library
 Summary(pl.UTF-8):	Biblioteka statyczna gstreamer-sharp
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	dotnet-gstreamer-sharp-static < 0.10
 
 %description static
 Static gstreamer-sharp library.
@@ -62,6 +66,7 @@ Biblioteka statyczna gstreamer-sharp.
 %prep
 %setup -q -n gstreamer-sharp-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
